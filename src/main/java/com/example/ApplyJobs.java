@@ -90,7 +90,7 @@ public class ApplyJobs {
                     try {
                         reviewButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[@aria-label='Review your application']")));
                     } catch (TimeoutException ex) {
-                        logger.warn("Neither Next nor Review button found, proceeding to submit.");
+                        logger.warn("Neither Next nor Review button found.");
                     }
 
                 }
