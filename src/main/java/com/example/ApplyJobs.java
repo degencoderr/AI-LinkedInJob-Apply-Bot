@@ -92,6 +92,7 @@ public class ApplyJobs {
                     } catch (TimeoutException ex) {
                         logger.warn("Neither Next nor Review button found, proceeding to submit.");
                     }
+
                 }
 
                 // Handle experience, work, visa-related questions
