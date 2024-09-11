@@ -87,28 +87,48 @@ public class LinkedInJobSearch {
         List<WebElement> jobCards = driver.findElements(By.xpath("//ul[contains(@class, 'scaffold-layout__list-container')]/li"));
         String card = "//ul[contains(@class, 'scaffold-layout__list-container')]/li[7]";
         for (WebElement jobCard : jobCards) {
-            helper.findScrollAndClickByXPath(jobCard);
-            //WebElement jobCard = driver.findElement(By.xpath(card));
-            WebElement divElement = jobCard.findElement(By.xpath("./div/div/div[1]/div[1]/div[2]/div[1]"));
-            divElement.click();
-            boolean isEasyApply = driver.findElements(By.xpath(".//div[contains(@class, 'jobs-apply-button--top-card')]"))
-                    .stream()
-                    .anyMatch(element -> element.getText().contains("Easy Apply"));
+            try {
+                helper.findScrollAndClickByXPath(jobCard);
+                //WebElement jobCard = driver.findElement(By.xpath(card));
+                WebElement divElement = jobCard.findElement(By.xpath("./div/div/div[1]/div[1]/div[2]/div[1]"));
+                divElement.click();
+                helper.randomSleep(5);
+                boolean isEasyApply = driver.findElements(By.xpath(".//div[contains(@class, 'jobs-apply-button--top-card')]"))
+                        .stream()
+                        .anyMatch(element -> element.getText().contains("Easy Apply"));
 
-            if (isEasyApply) {
-                // Click the Easy Apply button
-                WebElement easyApplyButton = driver.findElement(By.xpath("//div[contains(@class, 'jobs-apply-button--top-card')]/button"));
-                easyApplyButton.click();
+                if (isEasyApply) {
+                    // Click the Easy Apply button
+                    WebElement easyApplyButton = driver.findElement(By.xpath("//div[contains(@class, 'jobs-apply-button--top-card')]/button"));
+                    easyApplyButton.click();
 
-                // Handle the Easy Apply form
-                ApplyJobs.handleEasyApplyForm();
+                    // Handle the Easy Apply form
+                    ApplyJobs.handleEasyApplyForm();
 
-                logger.info("Successfully applied to job: " + divElement.getAttribute("aria-label"));
-            } else {
-                logger.info("Skipping job without Easy Apply: " + divElement.getAttribute("aria-label"));
+                    logger.info("Successfully applied to job: " + divElement.getAttribute("aria-label"));
+                } else {
+                    logger.info("Skipping job without Easy Apply: " + divElement.getAttribute("aria-label"));
+                }
+            }
+            catch (Exception e){
+                logger.error("Unexpected error: " + e.getMessage());
+                closeJobCard();
             }
         }
 
+
+    }
+
+    private void closeJobCard(){
+        WebElement dismissButton = driver.findElement(By.xpath("//button[@aria-label='Dismiss']"));
+        dismissButton.click();
+        helper.randomSleep(5);
+        if(driver.findElement(By.xpath("//div[contains(@class, 'artdeco-modal__header ember-view')]"))!= null){
+            WebElement discardApplication = driver.findElement(By.xpath("//button[@data-control-name='discard_application_confirm_btn']"));
+            discardApplication.click();
+            helper.randomSleep(5);
+            logger.info("closed an exception ");
+        }
 
     }
 
