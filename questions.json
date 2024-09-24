@@ -1,0 +1,17 @@
+{
+
+  "questions": {
+    "do You have experience": "yes",
+    "experience": "5",
+    "education": "Master's Degree",
+    "US Citizen": "No",
+    "require sponsorship": "yes",
+    "authorized to work": "yes",
+    "commute": "no",
+    "commuting": "no",
+    "hybrid": "yes",
+    "remote": "yes",
+    "onsite": "yes"
+  }
+
+}

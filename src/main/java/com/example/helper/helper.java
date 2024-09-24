@@ -100,5 +100,18 @@ public class helper {
         }
     }
 
+    public void closeJobCard(){
+        WebElement dismissButton = driver.findElement(By.xpath("//button[@aria-label='Dismiss']"));
+        dismissButton.click();
+        randomSleep(5);
+        if(driver.findElement(By.xpath("//div[contains(@class, 'artdeco-modal__header ember-view')]"))!= null){
+            WebElement discardApplication = driver.findElement(By.xpath("//button[@data-control-name='discard_application_confirm_btn']"));
+            discardApplication.click();
+            randomSleep(5);
+            logger.info("closed an exception ");
+        }
+
+    }
+
     // Optional: Add more helper methods as needed
 }

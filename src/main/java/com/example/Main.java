@@ -4,8 +4,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.edge.EdgeDriver;
-import java.io.IOException;
 
+import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.concurrent.TimeUnit;
 
@@ -24,9 +24,10 @@ public class Main {
         driver.get("https://www.linkedin.com/login");
 
         // Perform login
-        loginToLinkedIn("divyabattula33@gmail.com", "");
+        loginToLinkedIn("divyabattula33@gmail.com", "Harshi@1319");
         try {
             JobFilter jobFilter = FilterLoader.loadFilters("filters.json");
+
             LinkedInJobSearch jobSearch = new LinkedInJobSearch(driver);
             jobSearch.navigateToJobSearch(jobFilter);
             // Continue with using jobFilter

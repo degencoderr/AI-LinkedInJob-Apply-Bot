@@ -117,25 +117,14 @@ public class LinkedInJobSearch {
             }
             catch (Exception e){
                 logger.error("Unexpected error: " + e.getMessage());
-                closeJobCard();
+                helper.closeJobCard();
             }
         }
 
 
     }
 
-    private void closeJobCard(){
-        WebElement dismissButton = driver.findElement(By.xpath("//button[@aria-label='Dismiss']"));
-        dismissButton.click();
-        helper.randomSleep(5);
-        if(driver.findElement(By.xpath("//div[contains(@class, 'artdeco-modal__header ember-view')]"))!= null){
-            WebElement discardApplication = driver.findElement(By.xpath("//button[@data-control-name='discard_application_confirm_btn']"));
-            discardApplication.click();
-            helper.randomSleep(5);
-            logger.info("closed an exception ");
-        }
 
-    }
 
     // Apply Date Posted Filter
     public void applyDatePosted(JobFilter jobFilter) {

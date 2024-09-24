@@ -78,6 +78,7 @@ public class ApplyJobs {
 
     private void handleMultiPageForm() {
         try {
+            int initialProgress = getProgressBarValue();
             // Go through contact info, resume, and additional questions
             while (true) {
                 // Check for "Next" or "Review your application" button
@@ -110,10 +111,27 @@ public class ApplyJobs {
                     reviewButton.click();
                     break;
                 }
+                // Wait for the page to load and check if the progress has changed
+                helper.randomSleep(5);
+                int newProgress = getProgressBarValue();
+
+                // If the progress hasn't changed, it means we're still on the same page
+                if (newProgress == initialProgress) {
+                    logger.warn("Stuck on the same page. Likely missing required questions.");
+                    helper.closeJobCard();
+                    break;
+                } else{
+                    initialProgress = newProgress;
+                }
             }
         } catch (Exception e) {
             logger.error("Error handling multi-page form: " + e.getMessage());
         }
+    }
+
+    private int getProgressBarValue() {
+        WebElement progressBar = driver.findElement(By.xpath("//progress[@class='artdeco-completeness-meter-linear__progress-element']"));
+        return Integer.parseInt(progressBar.getAttribute("value"));
     }
 
 

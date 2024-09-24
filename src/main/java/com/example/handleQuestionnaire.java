@@ -35,7 +35,7 @@ public class handleQuestionnaire {
                 String questionText = question.getText().toLowerCase(); // Get the question text
 
                 // Match the question with the provided answer
-                String answer = getAnswerForQuestion(questionText);
+                String answer = QuestionLoader.getAnswerForQuestion(questionText);
 
                 if (answer != null) {
                     // Identify input type and provide an answer
@@ -60,6 +60,9 @@ public class handleQuestionnaire {
                 }
             }
         } catch (NoSuchElementException e) {
+            logger.warn("Question handling encountered an issue: " + e.getMessage());
+        }
+        catch (Exception e) {
             logger.warn("Question handling encountered an issue: " + e.getMessage());
         }
     }
